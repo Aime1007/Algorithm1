@@ -2,18 +2,39 @@
 #include <cstdio>
 #include <queue>
 #include <algorithm>
+#define min(a,b) (a<b ? a:b)
 using namespace std;
-
-int main() {
-	priority_queue<int,vector<int>, greater<int> > q;
-	q.push(5);
-	q.push(4);
-	q.push(44);
-	q.push(2);
-	q.push(43);
-	while(!q.empty()) {
-		cout << q.top() <<endl;
-		q.pop();
+int n;
+int t[2500];
+void find(int left,int right) {
+		if( left < right ) {
+			t[i]=s[left];
+			left ++;
+		}
+		else if( left > right ) {
+			t[i]=s[right];
+			right --;
+		}
+		else {
+			
+		}
 	}
-	return 0;
+int main() {
+	string s;
+	scanf("%d", &n);
+	scanf("%d", &s);
+	
+	int left = 0, right = s.length()-1;
+	
+
+	
+	int ans=0, tt=0;
+	for(int i=0; i<n; i++) {
+		if( tt<item[i].second) {
+			ans ++;
+			tt=item[i].first;
+		}
+	}
+	
+	cout << ans <<endl;
 }

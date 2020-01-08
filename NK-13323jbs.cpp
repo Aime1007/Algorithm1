@@ -8,7 +8,7 @@ int n;
 int a[MAXN];
 
 int dfs(int i,int l) {
-    if( l==log(n)/log(2) || i==n-1) return l;
+    if( l==log(n)/log(2) || i==n) return l;
     
     if( a[i]<=a[0] ) return dfs(i+1,l+1);
     
@@ -28,3 +28,4 @@ int main() {
     else 
         printf("%d", ans+1);
 }
+
