@@ -23,7 +23,7 @@ int dfs(Node p) {
 			if(dfs(next)) return 1;
 			visited[nx][ny]=0;
 		}
-		if(map[nx][ny]=='D' && t==p.time) {
+		if(map[nx][ny]=='D' && t==nt) {
 			return 1;
 		}
 	}
