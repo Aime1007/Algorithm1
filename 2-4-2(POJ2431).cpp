@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <algorithm>
 #include <cstring>
 #include <queue>
 using namespace std;
@@ -18,6 +19,7 @@ int main() {
 	A[N]=0;
 	B[N]=0;
 	N++;
+
 	int ans=0, pos=0, tank =P;
 	for(int i=0; i<N; i++) {
 		int d = L-A[i]-pos;
