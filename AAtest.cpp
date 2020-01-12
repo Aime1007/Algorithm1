@@ -1,40 +1,17 @@
 #include <iostream>
-#include <cstdio>
-#include <queue>
-#include <algorithm>
-#define min(a,b) (a<b ? a:b)
+#include <set>
 using namespace std;
-int n;
-int t[2500];
-void find(int left,int right) {
-		if( left < right ) {
-			t[i]=s[left];
-			left ++;
-		}
-		else if( left > right ) {
-			t[i]=s[right];
-			right --;
-		}
-		else {
-			
-		}
-	}
-int main() {
-	string s;
-	scanf("%d", &n);
-	scanf("%d", &s);
-	
-	int left = 0, right = s.length()-1;
-	
 
+int main() {
+	set<int> s;
+	s.insert(1);
+	s.insert(3);
+	s.insert(5);
 	
-	int ans=0, tt=0;
-	for(int i=0; i<n; i++) {
-		if( tt<item[i].second) {
-			ans ++;
-			tt=item[i].first;
-		}
-	}
-	
-	cout << ans <<endl;
+	set<int>::iterator ite;
+//	int it;
+//	it = s.find(1);
+	ite = s.find(1);
+	if(ite==s.end()) cout << "NO";
+	else cout << "YES";
 }
