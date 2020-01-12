@@ -11,3 +11,7 @@ for(int i=0; i<n; i++) {
 	scanf("%s", &map[i]);
 }
 
+bool cmp(const Node &a1,const Node &a2)
+{
+	return a1.a>a2.a;
+}
