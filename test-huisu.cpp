@@ -21,5 +21,11 @@ int main() {
 	nums.push_back(3);
 	result.push_back(item);
 	generate(0);
+	for(int i=0; i<result.size(); i++) {
+		for(int j=0; j<result[i].size(); j++) {
+			cout<< result[i][j];
+		}
+		cout<<endl;
+	}
 	
 }
