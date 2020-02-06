@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 const int MAX_N=105;
 const int MAX_V=255;
