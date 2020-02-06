@@ -1,15 +1,26 @@
 #include <iostream>
 #include <algorithm> 
 using namespace std;
-int dp[100];
-int type[5]= {1,5,10,20,50};
-int main() {
-	int n;
-	cin >>n;
-	dp[0]=0;
-	for(int i=0; i<n; i++) {
-		for(int j=type[i]; j<5; j++)
-			dp[j]=min(dp[j], dp[j-type[i]]+1);
+const int MAX_M=100;
+const int MAX_V=5;
+int dp[MAX_M];
+int value[MAX_V]={1,5,10,25,50};
+void solve() {
+	for(int i=0; i<MAX_M; i++) {
+		dp[i]=INT_MAX;
 	}
-	cout<< dp[n];
+	dp[0]=0;
+	for(int i=0; i<MAX_V; i++) {
+		for(int j=value[i]; j<MAX_M; j++) {
+			dp[j]=min(dp[j], dp[j-value[i]]+1);
+		}
+	}
+}
+
+int main() {
+	int s;
+	solve();
+	while(cin>>s) {
+		cout<< dp[s] <<endl;
+	}
 }
