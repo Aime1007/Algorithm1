@@ -41,7 +41,7 @@ int main() {
 		int k=1;
 		cnt=1;
 		flag=false;
-		while(k<n) {
+		while(k<n) { //最少处于哪一层 
 			k <<=1;
 			cnt++;
 		}
