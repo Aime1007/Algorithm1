@@ -38,7 +38,7 @@ void iddfs(int sep) {
 
 int main() {
 	while( cin >>n&&n) {
-		int k=1;
+		int k=1;  //当前层最大 
 		cnt=1;
 		flag=false;
 		while(k<n) { //最少处于哪一层 
