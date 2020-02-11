@@ -2,9 +2,12 @@
 using namespace std;
 const int maxn = 1050;
 int s[maxn];
+int height[maxn];
 void init() {
 	for(int i=1; i<=maxn; i++) {
 		s[i] = i;
+		
+		height[i] = 0;
 	}
 }
 int find(int x) {
@@ -13,7 +16,14 @@ int find(int x) {
 void merge(int x, int y) {
 	x = find(x);
 	y = find(y);
-	if(x != y) s[x] = s[y];
+	if(height[x]==height[y]) {
+		height[x] = height[x]+1;
+		s[y] = x;
+	}
+	else {
+		if(height[x] < height[y]) s[x] = y;
+		else s[y] = x;
+	}
 }
 
 int main() {
