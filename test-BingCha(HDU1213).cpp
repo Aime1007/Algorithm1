@@ -11,7 +11,8 @@ void init() {
 	}
 }
 int find(int x) {
-	return x==s[x]? x:find(s[x]);
+	if(x != s[x]) s[x]=find(s[x]);
+	return s[x];
 }
 void merge(int x, int y) {
 	x = find(x);
