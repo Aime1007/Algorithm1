@@ -6,7 +6,7 @@ int n, tot = 0;
 int col[12] = {0};
 bool check(int c, int r) {
 	for(int i=0; i<r; i++) {
-		if(col[i]==c || (abs(col[i]-c) == abs(i-r)))
+		if(col[i]==c || (abs(col[i]-c) == abs(i-r))) //м╛ап 
 			return false;
 	}
 	return true;

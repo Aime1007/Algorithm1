@@ -18,13 +18,14 @@ void dfs(int k, int sum) {
 	if( num>ans)
 		ans=num;
 	for(int i=k+1; i<=n; i++) {
-		if( num>sum) {
+//		if( num>sum) {//Ğ¡¼ôÖ¦ 
 			book[i]=true;
 			dfs(i, num);
 			book[i]=false;
-		}
+//		}
 	}
 }
+
 int main() {
 	cin >> n;
 	for(int i=1; i<=n ;i++) {
