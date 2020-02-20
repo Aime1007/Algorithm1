@@ -4,7 +4,7 @@
 using namespace std;
 const int maxn = 10010;
 int a,b;
-int v[maxn];
+int v[maxn],v2[maxn];
 int r[maxn]={0};
 int cnt[maxn]={0};
 void result(int i) {
@@ -14,6 +14,7 @@ void result(int i) {
 			sum+=pow(x%10,2);
 			x/=10;
 		}
+		if(v2[i]==1) return;
 		if(sum==1) {
 			cnt[i]++;
 			r[i]=1;
@@ -21,6 +22,9 @@ void result(int i) {
 		}
 		if(r[sum]==1) {
 			r[sum]=0;
+		}
+		if(v2[sum]==0) {
+			v2[sum]=1;
 		}
 		if(v[sum]==0) {
 			v[sum]=1;
