@@ -8,15 +8,6 @@ void init() {
 		parent[i]=i;
 	}
 }
-//int find1(int a) {
-//	return a == parent[a] ? a:find1(parent[a]);
-//}
-//int find2(int a) {
-//	while(a!=parent[a]) {
-//		a = parent[a];
-//	}
-//	return a;
-//}
 int find(int a) {
 	int root=a;
 	while(root!=parent[root]) {
@@ -29,7 +20,7 @@ int find(int a) {
 	}
 	return root;
 }
-void merge(int a,int b) {
+void ii(int a,int b) {
 	a=find(a);
 	b=find(b);
 	if(a != b) parent[a]=parent[b];
@@ -59,14 +50,13 @@ int main(){
 		int index;
 		scanf("%d",&index);
 		if(find(index)==index&&visited[index]==0){
-//			if(flag==0){
-//				printf("%05d",index);
-//				flag=1;
-//			}
-//			else{
-				printf(" %05d",index);
+			if(flag==0){
+				printf("%05d",index);
 				flag=1;
-//			}
+			}
+			else{
+				printf(" %05d",index);
+			}
 			visited[index]=1;
 		}
 	}
