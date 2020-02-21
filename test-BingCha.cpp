@@ -20,7 +20,7 @@ int find(int a) {
 	}
 	return root;
 }
-void ii(int a,int b) {
+void merge(int a,int b) {
 	a=find(a);
 	b=find(b);
 	if(a != b) parent[a]=parent[b];
