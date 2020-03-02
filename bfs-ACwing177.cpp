@@ -4,7 +4,6 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
- 
 char graph[805][805];   // 地图,从下标1开始记录
 int timee;       // 时间
 int n,m;        // 地图行列数
@@ -21,7 +20,7 @@ queue<node> q[2],qt;    // gg和mm队列，临时队列
 bool isOk(node t) {
     if(t.x < 1 || t.x > n || t.y < 1 || t.y > m)
         return false;   // 越界
-    if(graph[t.x][t.y] == 'X' || graph[t.x][t.y] == '\0')
+    if(graph[t.x][t.y] == 'X')
         return false;   // 墙
     for (int i = 0; i < 2; i++) {
         if(2*timee >= abs(t.x-zz[i].x) + abs(t.y-zz[i].y))

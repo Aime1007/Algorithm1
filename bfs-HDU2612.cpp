@@ -23,7 +23,7 @@ bfs(int mark, int start, int end) {
 				continue;
 			if(map[next.x][next.y]==end) return true;
 			v[next.x][next.y]=1;
-			
+			q[mark].push(next);
 		}
 	}
 	return false;
@@ -31,8 +31,8 @@ bfs(int mark, int start, int end) {
 int main() {
 	while(cin >> n >> m) {	
 		for(int i=1; i<=n; i++) {
-			scanf("%s", &map[i]+1);
 			for(int j=1; j<=m; j++) {
+				cin >> map[i][j];
 				if(map[i][j]=='Y') yy.x=i, yy.y=j;
 				if(map[i][j]=='M') mm.x=i, mm.y=j;
 			}
@@ -44,7 +44,8 @@ int main() {
 		}
 		q[0].push(yy);
 		q[1].push(mm);
-		
+		v[yy.x][yy.y]=1;
+		v[mm.x][mm.y]=1;
 		while(!q[0].empty() && !q[1].empty()) {
 			time++;
 	        bool flag1 = bfs(0,'Y','M');
@@ -53,4 +54,5 @@ int main() {
 	            cout<<time;
 	    }
 	}
+	return 0;
 }
