@@ -24,7 +24,6 @@ void primes() {
 int bfs() {
 	while(!q.empty()) {
 		Node now = q.front(); q.pop();
-//		cout << now.x <<" "<<now.value<<endl;
 		if(now.x==m) return now.value;
 		for(int i=1000; i<10000; i++) {
 			if(v[i]==1) continue;
