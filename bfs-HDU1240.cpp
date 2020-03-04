@@ -1,12 +1,13 @@
 #include <iostream>
+#include <cstring>
 #include <queue>
 using namespace std;
-int n, cnt=0;
+int n;
 char map[12][12][12];
 struct Node {
 	int x, y, z;
 	int step;
-}start,end;
+}start,endd;
 queue<Node> q;
 int dx[]={-1,1,0,0,0,0};
 int dy[]={0,0,-1,1,0,0};
@@ -21,44 +22,45 @@ int bfs() {
 			next.y=now.y+dy[i];
 			next.z=now.z+dz[i];
 			next.step=now.step+1;
-			if(next.x<1 || next.x>n || next.y<1 || next.y>n
-			|| next.z<1 || next.z>n || v[next.x][next.y][next.z]==1)
+			if(next.x<0 || next.x>=n || next.y<0 || next.y>=n
+			|| next.z<0 || next.z>=n || v[next.x][next.y][next.z]==1 
+			|| map[next.x][next.y][next.z]=='X')
 				continue;
-			if(next.x==end.x && next.y==end.y && next.z==end.z) {
+			if(next.x==endd.x && next.y==endd.y && next.z==endd.z) {
 				return next.step;
 			}
-			else
-			q.push(next);
+			else {
+				q.push(next);
+				v[next.x][next.y][next.z]=1;
+			}
+			
 		}
 	}
 	return -1;
 }
 int main() {
-	while(~scanf("START %d", &n)) {
-		cnt++;
-		for(int k=1; k<=n; k++) {
-			for(int i=1; i<=n; i++) {
-				for(int j=1; j<=n; j++) {
-					scanf("%c", &map[k][i][j]);	
+	char s[10];
+	while(~scanf("%s %d", s, &n)) {
+		memset(v,0,sizeof(v));
+		for(int i=0; i<n; i++) {
+			for(int j=0; j<n; j++) {
+				for(int k=0; k<n; k++) {
+					cin>>map[k][j][i];
 				}
-				getchar();
 			}
 		}
-		for(int k=1; k<=n; k++) {
-			for(int i=1; i<=n; i++) {
-				for(int j=1; j<=n; j++) {
-					printf("%c", map[k][i][j]);	
-				}
-				
-			}
+		
+		scanf("%d %d %d", &start.x, &start.y, &start.z);
+		scanf("%d %d %d", &endd.x, &endd.y, &endd.z);
+		scanf("%s", s);
+		start.step=0;
+		v[start.x][start.y][start.z]=1;
+		q.push(start);
+		int ans=bfs();
+		if(start.x==endd.x && start.y==endd.y && start.z==endd.z) {
+			ans = 0;
 		}
-//		scanf("%d %d %d", &start.x, &start.y, &start.z);
-//		scanf("%d %d %d", &end.x, &end.y, &end.z);
-//		start.step=0;
-//		q.push(start);
-//		int ans=bfs();
-//		if(ans==-1) cout <<"NO ROUTE"<<endl;
-//		else cout << cnt <<" "<< ans <<endl;
-//		scanf("END");
+		if(ans==-1) cout <<"NO ROUTE"<<endl;
+		else cout << n <<" "<< ans <<endl;
 	}
 }
