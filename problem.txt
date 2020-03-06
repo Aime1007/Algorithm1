@@ -17,4 +17,5 @@ bool cmp(const Node &a1,const Node &a2)
 }
 
 3. INT_MAX
-4.
+4. cnt = unique(id+1,id+cnt+1)-id-1;
+lower_bound(id+1,id+cnt+1,x)-id;
