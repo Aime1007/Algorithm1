@@ -6,45 +6,68 @@ int n,m;
 int a[maxn];
 struct node {
 	int l,r;
-	int val;
+//	int val;
 	int sum,dat,lmax,rmax;
 }t[maxn*4];
 void build(int p, int l, int r) {
 	t[p].l=l, t[p].r=r;
 	if(l==r) {
-		t[p].val=a[p];
+//		t[p].val=a[p];
+		t[p].dat=t[p].sum=t[p].lmax=t[p].rmax=a[l];
 		return ;
 	}
 	int mid=(l+r)/2;
 	build(p*2,l,mid);
 	build(p*2+1,mid+1,r);
-	t[p].val=max(t[p*2].val,t[p*2+1].val);
+//	t[p].val=max(t[p*2].val,t[p*2+1].val);
 	t[p].sum=t[p*2].sum+t[p*2+1].sum;
 	t[p].lmax=max(t[p*2].lmax,t[p*2].sum+t[p*2+1].lmax);
 	t[p].rmax=max(t[p*2+1].rmax,t[p*2+1].sum+t[p*2].rmax);
-	t[p].dat=max(max(t[p*2].dat,t[p*2+1].dat),t[p*2].rmax+t[p*2+1].lmax);
+	t[p].dat=max(t[p*2].dat,max(t[p*2+1].dat,t[p*2].rmax+t[p*2+1].lmax));
 }
 void change(int p, int x, int v) {
 	if(t[p].l==t[p].r) {
-		t[p].val=v;
+		t[p].dat=v;
+		t[p].sum=v;
+		t[p].lmax=v;
+		t[p].rmax=v;
 		return;
 	}
 	int mid=(t[p].l+t[p].r)/2;
 	if(x<=mid) change(p*2,x,v);
-	else change(p*2+1,x,v);
-	t[p].val=max(t[p*2].val,t[p*2+1].val);
+	else change(p<<1|1,x,v);
+//	t[p].val=max(t[p*2].val,t[p*2+1].val);
 	t[p].sum=t[p*2].sum+t[p*2+1].sum;
 	t[p].lmax=max(t[p*2].lmax,t[p*2].sum+t[p*2+1].lmax);
 	t[p].rmax=max(t[p*2+1].rmax,t[p*2+1].sum+t[p*2].rmax);
-	t[p].dat=max(max(t[p*2].dat,t[p*2+1].dat),t[p*2].rmax+t[p*2+1].lmax);
+	t[p].dat=max(t[p*2].dat,max(t[p*2+1].dat,t[p*2].rmax+t[p*2+1].lmax));
 }
-int ask(int p,int l,int r) {
-	if(l<=t[p].l && r>=t[p].r) return t[p].dat;
+node ask(int p,int l,int r) {
+	if(l<=t[p].l && r>=t[p].r) return t[p];
 	int mid=(t[p].l+t[p].r)/2;
-	int dat=-(1<<30);
-	if(l<=mid) dat=max(dat,ask(p*2,l,r));
-	if(r>mid) dat=max(dat,ask(p*2+1,l,r));
-	return dat;
+	int val=-(1<<30);
+	node a,b,c;
+	a.dat=a.sum=a.lmax=a.rmax=val;
+	b.dat=b.sum=b.lmax=b.rmax=val;
+	c.dat=c.lmax=c.rmax=val;
+	c.sum=0;
+	if (l<=mid&&r<=mid){
+        a=ask(p*2,l,r);
+        c.sum+=a.sum;
+    }
+	else if(l>mid && r>mid) {
+		b=ask(p*2+1,l,r);
+		c.sum+=b.sum;
+	}
+	else {
+		a=ask(p*2,l,r);
+		b=ask(p*2+1,l,r);
+		c.sum+=a.sum+b.sum;
+	}
+	c.dat=max(c.dat,max(max(a.dat,b.dat),a.rmax+b.lmax));
+	c.lmax=max(c.lmax,max(a.lmax,a.sum+b.lmax));
+	c.rmax=max(c.rmax,max(b.rmax,b.sum+a.rmax));
+	return c;
 }
 int main() {
 	cin >> n >> m;
@@ -52,12 +75,12 @@ int main() {
 		cin >> a[i];
 	}
 	build(1,1,n);
-	for(int i=1; i<=3; i++) {
+	for(int i=1; i<=m; i++) {
 		int k,x,y;
 		cin >> k >> x >> y;
-		if(x>y) swap(x,y);
 		if(k==1) {
-			cout<< ask(1,x,y) <<endl;
+			if(x>y) swap(x,y);
+			cout<< ask(1,x,y).dat <<endl;
 		}
 		else {
 			change(1,x,y);
