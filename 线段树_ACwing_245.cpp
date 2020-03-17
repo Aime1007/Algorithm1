@@ -6,20 +6,17 @@ int n,m;
 int a[maxn];
 struct node {
 	int l,r;
-//	int val;
 	int sum,dat,lmax,rmax;
 }t[maxn*4];
 void build(int p, int l, int r) {
 	t[p].l=l, t[p].r=r;
 	if(l==r) {
-//		t[p].val=a[p];
 		t[p].dat=t[p].sum=t[p].lmax=t[p].rmax=a[l];
 		return ;
 	}
 	int mid=(l+r)/2;
 	build(p*2,l,mid);
 	build(p*2+1,mid+1,r);
-//	t[p].val=max(t[p*2].val,t[p*2+1].val);
 	t[p].sum=t[p*2].sum+t[p*2+1].sum;
 	t[p].lmax=max(t[p*2].lmax,t[p*2].sum+t[p*2+1].lmax);
 	t[p].rmax=max(t[p*2+1].rmax,t[p*2+1].sum+t[p*2].rmax);
@@ -35,8 +32,8 @@ void change(int p, int x, int v) {
 	}
 	int mid=(t[p].l+t[p].r)/2;
 	if(x<=mid) change(p*2,x,v);
-	else change(p<<1|1,x,v);
-//	t[p].val=max(t[p*2].val,t[p*2+1].val);
+//	else change(p<<1|1,x,v);
+	else change(p*2+1,x,v);
 	t[p].sum=t[p*2].sum+t[p*2+1].sum;
 	t[p].lmax=max(t[p*2].lmax,t[p*2].sum+t[p*2+1].lmax);
 	t[p].rmax=max(t[p*2+1].rmax,t[p*2+1].sum+t[p*2].rmax);
