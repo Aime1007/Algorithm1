@@ -33,11 +33,21 @@ int main() {
 			}
 			int flag=0;
 			for(int j=1; j<=cnt; j++) {
-				if(a[i].s>s[j]) {
+				if(s[j]%2==0 && a[i].s>s[j])  {
+					s[j]=a[i].e;
+					flag=1;
+					break;
+				} 
+				else if(s[j]%2!=0 && a[i].s>s[j]+1) {
 					s[j]=a[i].e;
 					flag=1;
 					break;
 				}
+//				if(a[i].s>s[j]) {
+//					s[j]=a[i].e;
+//					flag=1;
+//					break;
+//				}
 			}
 			if(flag==0) {
 				cnt++;
