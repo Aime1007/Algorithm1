@@ -24,9 +24,10 @@ int main() {
 			a[i].v=false;
 		}
 		sort(a+1,a+n+1,cmp);
-		for(int i=1,day=1; i<=n; i++,day++) {
+		for(int i=1,day=1; i<=n; i++) {
 			if(day<=a[i].dead) {
 				a[i].v=true;
+				day++;
 			}
 			else {
 				int min=-1;
@@ -45,7 +46,6 @@ int main() {
 				if(a[min].rdu<a[i].rdu) {
 					a[min].v=false;
 					a[i].v=true;
-					day--;
 				}
 			}
 		}

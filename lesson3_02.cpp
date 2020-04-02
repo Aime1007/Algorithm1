@@ -43,11 +43,6 @@ int main() {
 					flag=1;
 					break;
 				}
-//				if(a[i].s>s[j]) {
-//					s[j]=a[i].e;
-//					flag=1;
-//					break;
-//				}
 			}
 			if(flag==0) {
 				cnt++;
