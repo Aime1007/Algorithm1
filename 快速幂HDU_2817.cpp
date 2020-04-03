@@ -7,9 +7,11 @@ ll quickpow(ll m, ll n) {
 	ll ans=1;
 	while(n) {
 		if(n&1) {
-			ans = (ans*m)%MOD;
+			ans *= m;
+			ans %= MOD;
 		}
-		m = (m*m)%MOD;
+		m *= m;
+		m %= MOD; 
 		n>>=1;
 	}
 	return ans;
@@ -23,7 +25,7 @@ int main() {
 		ll ans;
 		if(c-b==b-a) {
 			ll d=(b-a);
-			ans=(d*k-d+a)%MOD;
+			ans=(d*(k-1)+a)%MOD;
 		}
 		else if(c/b==b/a){
 			ll d=(b/a);
