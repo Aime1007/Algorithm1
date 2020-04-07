@@ -45,9 +45,9 @@ int main() {
 				else {
 					if(a[ea]<b[sb]) {
 						ans--;
-						ea--;
-						sb++;
 					}
+					ea--;
+					sb++;
 				}
 			}
 		}

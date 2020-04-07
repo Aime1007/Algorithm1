@@ -1,0 +1,66 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+const int MaxSize = 1002;
+int A[MaxSize];
+
+bool cmp(int a, int b) {
+	return a > b;
+}
+
+int main() {
+	int T, N;
+	int Sum;
+
+	cin >> T;
+	while (T--) {
+		cin >> N;
+
+		Sum = 0;
+		for (int i = 0; i < N; i++) {
+			cin >> A[i];
+			Sum += A[i];
+		}
+		//????
+		//?????????????????,
+		//?????????,??????+1,
+		//??????????+1
+		if (Sum % 2) {
+			cout << "no" << endl;
+			continue;
+		}
+
+		int Flag = 0;
+		for (int i = 0; i < N; i++) {
+			//??????
+			sort(A, A + N, cmp);
+			//???????,?????
+			if (A[0] == 0) {
+				Flag = 1;
+				break;
+			}
+
+			for (int j = 0; j < A[0]; j++) {
+				A[j + 1]--;
+				if (A[j + 1] < 0) {
+					Flag = 2;
+					break;
+				}
+			}
+			A[0] = 0;
+			//??????????
+			if (Flag == 2) {
+				break;
+			}
+		}
+		//?Flag=0???,???????????
+		//?????,??
+		if (Flag == 1) {
+			cout << "yes" << endl;
+		}
+		else {
+			cout << "no" << endl;
+		}
+	}
+	return 0;
+}
