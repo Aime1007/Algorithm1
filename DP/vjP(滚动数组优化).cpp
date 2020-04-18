@@ -6,7 +6,7 @@ int a[21];
 int n;
 void solve() {
 	for(int i=1; i<=n; i++) {
-		for(int j=40; j>=a[i]; j--) {
+		for(int j=40; j>=a[i]; j--) {//j>=0 ERROR 
 			dp[j]=dp[j]+dp[j-a[i]];
 		}
 	}
