@@ -14,7 +14,7 @@ void solve() {
 		for(int j=0; j<=v; j++)
 			dp[i][j]=dp[i-1][j];
 		for(int j=volume[i]; j<=v; j++)
-			dp[i][j]=max(dp[i-1][j],dp[i-1][j-volume[i]]+value[i]);
+			dp[i][j]=max(dp[i][j],dp[i-1][j-volume[i]]+value[i]);
 	}
 }
 int main() {
