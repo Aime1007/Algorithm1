@@ -6,7 +6,7 @@ const int MAXN = 32;
 float q;
 int n,index;
 int val[MAXN];
-float dp[5050000];
+int dp[5050000];
 void solve() {
 	for(int i=1; i<index; i++) {
 		for(int j=(int)(q*100); j>=val[i]; j--) {
