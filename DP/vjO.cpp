@@ -10,7 +10,7 @@ int ans;
 void solve() {
 	memset(dp,0,sizeof(dp));
 	for(int i=1; i<=n; i++) {
-		for(int j=0; j<i; j++) {
+		for(int j=0; j<i; j++) {//´Ó0¿ªÊ¼ 
 			if(v[j]<v[i]) {
 				dp[i]=max(dp[i],dp[j]+v[i]);
 			}
@@ -23,7 +23,6 @@ int main() {
 	while(cin>>n && n) {
 		for(int i=1; i<=n; i++) {
 			cin>>v[i];
-			dp[i]=v[i];
 		}
 		solve();
 		cout << ans <<endl;
