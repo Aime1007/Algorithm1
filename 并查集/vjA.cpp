@@ -3,7 +3,6 @@ using namespace std;
 const int MAXN = 1005;
 int t,n,m;
 int root[MAXN];
-int h[MAXN];
 void init() {
 	for(int i=1; i<=n; i++) {
 		root[i]=i;
@@ -14,14 +13,7 @@ int get(int x) {
 	return root[x]=get(root[x]);
 }
 void merge(int x,int y) {
-	if(h[x]==h[y]) {
-		h[x]=h[x]+1;
-		root[y]=x;
-	}
-	else {
-		
-	}
-	root[get(x)]=get(y);
+	root[get(x)]=get(y); 
 }
 int main() {
 	cin>>t;

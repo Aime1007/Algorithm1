@@ -1,6 +1,5 @@
-
-#include<stdio.h>
-#include<string.h>
+#include<cstdio>
+#include<cstring>
 #include<algorithm>
 using namespace std;
 int dp[100001][14];
