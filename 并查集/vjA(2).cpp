@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 const int MAXN = 1005;
-int t,n,m;
+//int t,n,m; 放这WA 
 int root[MAXN];
 int h[MAXN];
 void init() {
@@ -27,6 +27,7 @@ void merge(int x,int y) {
 	}
 }
 int main() {
+	int t,n,m; //一定放在这 
 	cin>>t;
 	while(t--) {
 		cin>>n>>m;
