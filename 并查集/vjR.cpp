@@ -24,32 +24,36 @@ void merge(int x,int y) {
 	y=get(y);
 	if(x != y) {
 		root[x]=y;
+		size[y]+=size[x];
 		d[x]=1;
-		size[y]+=size[x];		
 	}
 }
 int main() {
-	cin>>t;
+	scanf("%d", &t);
 	for(int z=1; z<=t; z++) {
-		cin>>n>>q;
+		scanf("%d%d", &n, &q);
+		getchar();
 		init();
 		char ch;
 		int flag=0;
 		for(int i=1; i<=q; i++) {
-			cin>>ch;
+			scanf("%c", &ch);
 			if(ch=='T') {
 				int a,b;
-				cin>>a>>b;
+				scanf("%d%d", &a, &b);
+				getchar();
 				merge(a,b);
 			}
 			else {
 				int a;
-				cin>>a;
+				scanf("%d", &a);
+				getchar();
 				if(flag==0) {
-					cout<<"Case "<<z<<":"<<endl;
+					printf("Case %d:\n", z);
 					flag=1;
 				}
-				cout<< get(a) <<" "<< size[get(a)] <<" "<< d[a] <<endl;
+				int r=get(a);
+				printf("%d %d %d\n", r, size[r], d[a]);
 			}
 		}
 	}

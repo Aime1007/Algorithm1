@@ -15,6 +15,7 @@ int get(int x) {
 	return root[x]=get(root[x]);
 }
 bool merge(int x,int y) {
+	if(x==y) return false;
 	x=get(x);
 	y=get(y);
 	if(x==y) return false;
@@ -24,11 +25,13 @@ bool merge(int x,int y) {
 int main() {
 	int x,y;
 	int flag=0;
+	int cnt=0;
 	while(~scanf("%d%d", &x, &y)) {
+		cnt++;
 		flag=0;
 		if(x==-1 && y==-1) break;
 		if(x==0 && y==0) {
-            printf("Yes\n");
+            printf("Case %d is a tree.\n", cnt);
             continue;
         }
 		init();
@@ -46,8 +49,9 @@ int main() {
 				flag=1;
 			}
 		}
+		printf("Case %d ", cnt);
 		if(flag==1) {
-			printf("No\n");
+			printf("is not a tree.\n");
 			continue;
 		}
 		int cnt=0;
@@ -55,7 +59,7 @@ int main() {
 			if(v[i] && root[i] == i) cnt++;
 			if(cnt>1) break;
 		}
-		if(cnt>1) printf("No\n");
-        else printf("Yes\n");
+		if(cnt>1) printf("is not a tree.\n");
+        else printf("is a tree.\n");
 	}
 } 
