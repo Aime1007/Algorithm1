@@ -24,7 +24,7 @@ void merge(int x,int y,int sum) {
 		d[ry]=d[x]+sum-d[y];
 	}
 	else {
-		if(sum!=fa[y]-fa[x]) ans++;
+		if(sum!=d[y]-d[x]) ans++;
 	}
 }
 int main() {
