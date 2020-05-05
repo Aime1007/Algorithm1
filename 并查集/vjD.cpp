@@ -19,15 +19,13 @@ int get(int x) {
 	if(x==root[x]) return x;
 	return root[x]=get(root[x]);
 }
-bool merge(int x,int y) {
-	x=get(x);
-	y=get(y);
+void merge(int x,int y) {
+	int rx=get(x);
+	int ry=get(y);
 	double dd=sqrt((p[x].x-p[y].x)*(p[x].x-p[y].x)+(p[x].y-p[y].y)*(p[x].y-p[y].y));
-	if(x!=y && dd<=d) {
-		root[x]=y;
-		return true;
+	if(rx!=ry && dd<=d) {
+		root[rx]=ry;
 	}
-	return false;
 }
 int main() {
 	cin>>n>>d;
@@ -44,6 +42,7 @@ int main() {
 			ready[index++]=x;
 			for(int i=0; i<index-1; i++) {
 				merge(ready[i],x);
+				//反过来不对 
 			}
 		}
 		else {

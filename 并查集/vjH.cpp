@@ -11,24 +11,24 @@ struct node{
 bool cmp(node x,node y){
     return x.pro>y.pro;
 }
-int f[maxn];
-int findd(int x){
-    if(f[x]==-1)  return x;
-    return f[x]=findd(f[x]);
+int fa[maxn];
+int get(int x){
+    if(fa[x]==-1)  return x;
+    return fa[x]=get(fa[x]);
 }
 int main(){
     while(~scanf("%d",&n)){
-        memset(f,-1,sizeof(f));
-        for (int i = 1; i <= n; ++i) {
+        memset(fa,-1,sizeof(fa));
+        for (int i = 1; i <= n; i++) {
             scanf(" %d %d",&s[i].pro,&s[i].d);
         }
         sort(s+1,s+n+1,cmp);
         int ans=0;
         for(int i=1; i<=n; i++){
-            int v=findd(s[i].d);
+            int v=get(s[i].d);
             if(v>0){
                 ans+=s[i].pro;
-                f[v]=v-1;
+                fa[v]=v-1;
             }
         }
         printf("%d\n",ans);
