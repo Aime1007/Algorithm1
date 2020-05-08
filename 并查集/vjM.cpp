@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <cstring>
 using namespace std;
 const int maxn = 505*3;
 int n,m;
@@ -14,115 +15,85 @@ int get(int x) {
 	return fa[x]=get(fa[x]);
 }
 void merge(int x, int y) {
+	int rx=get(x);
+	int ry=get(y);
+	if(rx==ry) return;
 	fa[get(x)]=get(y);
 }
 bool judge(int x,int y) {
-	if(get(x)==get(y)) {
-//		printf("%d %d",x,y);
-		return true;
-	}
+	if(get(x)==get(y)) return true;
 	return false;
 }
 int main() {
-
+	int x[maxn],y[maxn];
+	char c[maxn];
+	int flag[maxn];
 	while(~scanf("%d%d", &n, &m)) {
-		init();
-		int flag=0;
-		int num1=-1,num2=-1;
-		int Judge=-1;
-		int cnt=-1;
-		int isans=0;
-//		if(n==1) {
-//			isans=1;
-//		}
-		int x,y;
-		char ch='=';
-		for(int i=1; i<=m; i++) {
-			
-			scanf("%d%c%d", &x, &ch, &y);
-			if(isans==1) continue;
-			if(ch=='<') {
-				if(judge(x,y) || judge(x+n,y+n) || judge(x+2*n,y+2*n) ||
-				judge(x+2*n,y) || judge(x,y+n) || judge(x+n,y+2*n)) {
-					if(flag==0) {
-						flag=1;
-						num1=x; 
-						num2=y;
-					}
-					else {
-						if(x==num1 || x==num2) {
-							Judge=x;
-							cnt=i;
-						}
-						else if(y==num1 || y==num2) {
-							Judge=y;
-							cnt=i;
-						}
-						else Judge=-2;
-						isans=1;
-					}
-				}
-				else {
-					merge(x,y+2*n);
-					merge(x+n,y);
-					merge(x+2*n,y+n);					
-				}
 
-			}
-			else if(ch=='>') {
-				if(judge(x,y) || judge(x+n,y+n) || judge(x+2*n,y+2*n) ||
-				judge(x,y+2*n) || judge(x+n,y) || judge(x+2*n,y+n)) {
-					if(flag==0) {
-						flag=1;
-						num1=x;
-						num2=y;						
+		for(int i=0; i<m; i++) {
+			
+			scanf("%d%c%d", &x[i], &c[i], &y[i]);
+		}
+		int cnt=0;
+		int last_step=0,Judge;
+		int d;
+		for(int i=0; i<n; i++) {
+			memset(flag,0,sizeof(flag));
+			init();
+			int f=0;
+			for(int j=0; j<m; j++) {
+				if(x[j]==i || y[j]==i) continue;
+				
+				if(c[j]=='=') {
+					if(judge(x[j],y[j]+n) || judge(x[j],y[j]+2*n)) {
+						f=1;
+						if(j+1>last_step) {
+							last_step=j+1;
+						}
+						break;
 					}
 					else {
-						if(x==num1 || x==num2) {
-							Judge=x;
-							cnt=i;
+						merge(x[j],y[j]);
+						merge(x[j]+n,y[j]+n);
+						merge(x[j]+2*n,y[j]+2*n);
+					}
+				}
+				else if(c[j]=='<'){
+					if(judge(x[j],y[j]) || judge(x[j],y[j]+n)) {
+						f=1;
+							if(j+1>last_step) {
+							last_step=j+1;
 						}
-						else if(y==num1 || y==num2) {
-							Judge=y;
-							cnt=i;
-						}
-						else Judge=-2;
-						isans=1;
+						break;
+					}
+					else {
+						merge(x[j],y[j]+2*n);
+						merge(x[j]+n,y[j]);
+						merge(x[j]+2*n,y[j]+n);
 					}
 				}
 				else {
-					merge(x+2*n,y);
-					merge(x,y+n);
-					merge(x+n,y+2*n);					
+					if(judge(x[j],y[j]) || judge(x[j],y[j]+2*n)) {
+						f=1;
+							if(j+1>last_step) {
+							last_step=j+1;
+						}
+						break;
+					}
+					else {
+						merge(x[j]+2*n,y[j]);
+						merge(x[j],y[j]+n);
+						merge(x[j]+n,y[j]+2*n);
+					}
 				}
 			}
-			else {
-				if(!judge(x,y) || !judge(x+n,y+n) || !judge(x+2*n,y+2*n)) {
-					flag=1;
-				}
-				else {
-					merge(x,y);
-					merge(x+n,y+n);
-					merge(x+2*n,y+2*n);					
-				}
-			}
-			
-		}
-		if(n==1) {
-			if(ch=='=')
-			printf("Player 0 can be determined to be the judge after 0 lines\n");
-			else printf("Impossible\n");
-			continue;
-		}
-		//flag==0
-		if(Judge==-1) {
-			printf("Can not determine\n");
-		}
-		else {
-			if(Judge==-2) printf("Impossible\n");
-			else {
-				printf("Player %d can be determined to be the judge after %d lines\n", Judge, cnt);
+			if(f==0) {
+				cnt++;
+				Judge=i;
 			}
 		}
+		if(cnt==0) printf("Impossible\n");
+		else if(cnt == 1) printf("Player %d can be determined to be the judge after %d lines\n",Judge, last_step);
+		else printf("Can not determine\n");
 	}
 }
