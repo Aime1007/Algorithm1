@@ -8,14 +8,17 @@ bool vis[maxn][maxn];
 int n,m;
 struct node {
 	int x,y;
-	int step; 
+	int step;
+	friend bool operator<(node a, node b) {
+		return a.step > b.step;
+	}
 }start;
-queue<node> q;
-int dx[]={1,-1,0,0};
-int dy[]={0,0,1,-1};
+priority_queue<node> q;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
 int bfs() {
 	while(!q.empty()) {
-		node now=q.front();
+		node now=q.top();
 		q.pop();
 		for(int i=0; i<4; i++) {
 			int nx,ny;
