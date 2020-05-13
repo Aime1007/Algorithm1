@@ -19,3 +19,8 @@ bool cmp(const Node &a1,const Node &a2)
 3. INT_MAX
 4. cnt = unique(id+1,id+cnt+1)-id-1;
 lower_bound(id+1,id+cnt+1,x)-id;
+
+5.优先队列
+friend bool operator<(node a,node b) {
+	return a.step>b.step;
+}
