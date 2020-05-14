@@ -25,7 +25,7 @@ int bfs() {
 			int nx,ny;
 			nx=now.x+dx[i];
 			ny=now.y+dy[i];
-			if(nx<1 || nx>n || ny<1 || ny>m || vis[nx][ny]==1)
+			if(nx<0 || nx>=n || ny<0 || ny>=m || vis[nx][ny]==1)
 				continue;
 			node next;
 			next.x=nx; next.y=ny; next.step=now.step;
@@ -41,13 +41,13 @@ int main() {
 	while(~scanf("%d%d", &n, &m)) {
 		if(n==0 && m==0) break; 
 		memset(vis,0,sizeof(vis));
-		for(int i=1; i<=n; i++) {
-			for(int j=1; j<=m; j++) {
-				cin>>map[i][j];
-			}
+		for(int i=0; i<n; i++) {
+			scanf("%s", &map[i]);
 		}
 		scanf("%d%d", &start.x, &start.y);
+		start.x-=1; start.y-=1;
 		scanf("%d%d", &final.x, &final.y);
+		final.x-=1; final.y-=1;
 		start.step=0;
 		while(!q.empty()) q.pop();
 		q.push(start);
