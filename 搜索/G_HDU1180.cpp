@@ -50,11 +50,9 @@ int bfs() {
 				if(now.step%2!=0) {
 					if(i==2 || i==3) continue;
 					else if(i==1) {
-						map[nx][ny]=='|';
 						ny=ny+1;
 					}
 					else {
-						map[nx][ny]=='|';
 						ny=ny-1;
 					}					
 				}
