@@ -2,6 +2,7 @@
 #include <cstring>
 #include <cstdio>
 #include <queue>
+#include <stack>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -17,13 +18,12 @@ struct node {
 	friend bool operator <(node a,node b) {
 		return a.step>b.step;
 	}
-}start;
-vector<node> path;
+}start,path[maxn][maxn];
 priority_queue<node> q;
 int bfs() {
 	while(!q.empty()) {
 		node now=q.top();
-		path.push_back(now);
+//		path.push_back(now);
 		q.pop();
 		for(int i=0; i<4; i++) {
 			int nx,ny;
@@ -36,9 +36,11 @@ int bfs() {
 			next.x=nx; next.y=ny; next.step=now.step+1;
 			if(map[nx][ny]!='.') next.step=next.step+(int)(map[nx][ny]-'0');
 //			printf("%d:%d,%d\n", next.step,next.x,next.y);
+			path[nx][ny]=now;
 			if(nx==n-1 && ny==m-1) return next.step;
 			q.push(next);
 			vis[nx][ny]=1;
+			
 		}
 	}
 	return -1;
@@ -54,12 +56,40 @@ int main() {
 		q.push(start);
 		vis[start.x][start.y]=1;
 		int ans=bfs();
+//		for(int i=0; i<n; i++) {
+//			for(int j=0; j<m; j++) {
+//				printf("(%d,%d)",path[i][j].x,path[i][j].y);
+//			}
+//			cout<<endl;
+//		}
 		if(ans==-1) printf("God please help our poor hero.\n");
 		else {
 			printf("It takes %d seconds to reach the target position, let me show you the way.\n", ans);
-			for(int i=0; i<path.size(); i++) {
-				printf("%d,%d\n", path[i].x,path[i].y);
+			stack<node> s;
+			node now;
+			now.x=n-1; now.y=m-1; now.step=ans;
+			while(!(now.x==0 && now.y==0)) {
+				s.push(now);
+				now=path[now.x][now.y];
+			}
+//			printf("(0,0)\n");
+			node last;
+			last.x=0; last.y=0; last.step=0;
+			int cnt=0;
+			while(!s.empty()) {
+				now=s.top();
+				
+				printf("%ds:(%d,%d)->(%d,%d)\n", ++cnt, last.x, last.y, now.x, now.y);
+				if(now.step!=last.step+1) {
+					int t=now.step-last.step-1;
+					while(t--) {
+						printf("%ds:FIGHT AT (%d,%d)\n",++cnt, now.x, now.y);
+					}
+				}
+				last=now;
+				s.pop();
 			}
 		}
+		printf("FINISH\n");
 	}
 }

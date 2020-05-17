@@ -1,77 +1,122 @@
-#include<stdio.h>
-#include<string.h>
-int fx[]={-1,0,1, 0};
-int fy[]={ 0,1,0,-1};
+#include <iostream>
+#include <queue>
+#include <cstring>
+#include <cstdio>
+using namespace std;
+int n,m;//????,???? 
+int map[1001][1001];//??
+int mino[1001][1001];
+int x1,y1,x2,y2;
 
-int sx,sy,ex,ey;
-int i,j,k,l,g;
-int n,m;
-int MAP[1001][1001],hash[1001][1001],d[1001][1001];
-struct node
-{
+struct spot{
     int x;
     int y;
-    int turn;
-}que[1000000];
-int bfs()
-{
-    struct node now;
-    int tail=1;
-    now.turn=0,i=0,que[0].x=sx,que[0].y=sy,que[0].turn=0,hash[sx][sy]=1;
-    memset(d,-1,sizeof(d));
-    while(i!=tail)
-    {
-        if(que[i].turn>=3) return 0;
-        for(k=0;k<4;k++)
-        {
-            now.x=que[i].x+fx[k],now.y=que[i].y+fy[k];
-            while(now.x>=1 && now.x<=m && now.y>=1 && now.y<=n && MAP[now.x][now.y]==0 )
-            {
-                //if(d[now.x][now.y]==d[que[i].x][que[i].y] && d[now.x][now.y]!=-1 && d[que[i].x][que[i].y]!=-1) break;//这句包括开头定义的数组d 本意想用作剪枝，但是加上后自己的数据也没过，但是可以ac，这题的数据太水了。
-                if(hash[now.x][now.y]==0)
-                {
-                    now.turn=que[i].turn+1;
-                    d[now.x][now.y]=k;
-                    que[tail++]=now;
-                    hash[now.x][now.y]=1;
-                    if(now.x==ex && now.y==ey)
-                        if(now.turn<=3) return 1;
-                        else return 0;
-                }
-                now.x+=fx[k],now.y+=fy[k];
-            }
-        }
-        i++;
-    }
-    return 0;
-}
+    //x,y??? 
+    int dir;//?????
+    //? 1
+    //? 2
+    //? 3 
+    //? 4 
+    //???(???)0
+    int turns;//???? 
+};
 
-int main()
-{
-    while(~scanf("%d%d",&m,&n),m)
-    {
-        for(i=1;i<=m;i++)
-            for(j=1;j<=n;j++)
-                scanf("%d",&MAP[i][j]);
-        scanf("%d",&l);
-        while(l--)
-        {
-            scanf("%d%d%d%d",&sx,&sy,&ex,&ey);
-            if((MAP[sx][sy]!=MAP[ex][ey]) || MAP[sx][sy]==0
-               || MAP[ex][ey]==0 || (sx==ex && sy==ey)
-               || sx>m ||ex>m ||sy>n ||ey>n)
-            {
-                puts("NO");
+spot s,e;//???????
+
+bool bfs(){
+    spot f;
+    spot t;
+    queue<spot>llk;
+    
+    llk.push(s);
+    
+    while (llk.size()){
+        f=llk.front();
+        llk.pop();
+        for (int i=1;i<=4;i++){
+            t.x=f.x;
+            t.y=f.y;
+            t.dir=i;//??
+            t.turns=f.turns;
+            switch (i){
+                case 1:
+                    t.x++;
+                    break;
+                case 2:
+                    t.y--;
+                    break;
+                case 3:
+                    t.x--;
+                    break;
+                case 4:
+                    t.y++;
+                    break;
+            }
+            //????? 
+            if (!(t.x>=0&&t.x<n&&t.y>=0&&t.y<m)){//???? 
                 continue;
             }
-            memset(hash,0,sizeof(hash));
-            g=MAP[ex][ey];
-            MAP[ex][ey]=0;
-            if(bfs()) printf("YES\n");
-            else printf("NO\n");
-            MAP[ex][ey]=g;
+            bool end=(t.x==e.x&&t.y==e.y);
+            if (map[t.x][t.y]!=0&&!end){//???? 
+                continue;
+            }
+            
+            if(t.dir!=f.dir&&f.dir!=0){//????????
+                t.turns++;
+            }
+            if (t.turns==3){//?????,??????
+                continue;
+            }
+
+            if (end){
+                return true;
+            }
+            if (t.turns<=mino[t.x][t.y]){
+                mino[t.x][t.y]=t.turns;
+                llk.push(t);//????
+            }
         }
     }
-    return 0;
+    return false;
 }
-
+int main(){
+    //freopen("G://Test.txt","r",stdin);  
+    while (scanf("%d%d",&n,&m)&&(n+m)){//??n,m>=0 ??n,m???0?(n+m)??0 
+        memset(map,0,sizeof(map));//????0 
+        for (int i=0;i<n;i++){
+            for (int j=0;j<m;j++){
+                scanf("%d",&map[i][j]);
+            }
+        }
+        int q;
+        scanf("%d",&q);
+        while(q--){
+            scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
+            //?????
+            x1--;y1--;x2--;y2--;
+            if (map[x1][y1]!=map[x2][y2]||
+                    map[x1][y1]==0||map[x2][y2]==0||
+                        (x1==x2&&y1==y2)){
+                cout<<"NO"<<endl;
+            }
+            //????????????
+            else {
+                memset(mino,3,sizeof(mino));
+                //???
+                s.x=x1;
+                s.y=y1;
+                s.dir=0;//??? 
+                s.turns=0;
+                mino[s.x][s.y]=0;
+                e.x=x2;
+                e.y=y2;
+                if (bfs()){
+                    cout<<"YES"<<endl;
+                }
+                else {
+                    cout<<"NO"<<endl;
+                }
+            }
+        }
+    }
+}

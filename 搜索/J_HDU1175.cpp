@@ -31,6 +31,9 @@ bool bfs() {
 			next.y=now.y+dy[i];
 			if(now.last==0) {
 				if(now.x==next.x) {
+					if(!q.empty() && q.top().cnt==now.cnt){
+						continue;
+					}
 					next.cnt=now.cnt+1;
 					next.last=1;
 				}
@@ -41,6 +44,9 @@ bool bfs() {
 			}
 			else if(now.last==1) {
 				if(now.y==next.y) {
+					if(!q.empty() && q.top().cnt==now.cnt){
+						continue;
+					}
 					next.cnt=now.cnt+1;
 					next.last=0;
 				}
