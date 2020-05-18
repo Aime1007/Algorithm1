@@ -54,7 +54,7 @@ int main() {
 			}
 			while(!q.empty()) q.pop();
 			vis[start.x][start.y]=1;
-			start.last=-1;
+			start.cnt=-1;
 			q.push(start);
 			bool ans=bfs();
 			if(ans==true) printf("YES\n");
