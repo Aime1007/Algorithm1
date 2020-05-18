@@ -26,16 +26,15 @@ int bfs() {
 			else {
 				next.x=now.x*2;
 			}
-			if(next.x<1 || next.x>maxn || vis[next.x]==1) continue;
+			if(next.x<0 || next.x>maxn || vis[next.x]==1) continue;
 			next.step=now.step+1;
 			vis[next.x]=1;
 			q.push(next);
 		}		
 	}
-	return -1;
 }
 int main() {
-	for(int i=1; i<=maxn; i++) {
+	for(int i=0; i<=maxn; i++) {
 		map[i]=i;
 	}
 	while(~scanf("%d%d", &start.x, &final.x)) {
