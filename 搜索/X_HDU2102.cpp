@@ -30,7 +30,7 @@ int bfs() {
 			|| vis[next.z][next.x][next.y]==1 || map[next.z][next.x][next.y]=='*'
 			|| next.step>t)
 				continue;
-			//注意不是>= 	。。。。。。。 
+			//注意不是>= 	。。。 
 			if(map[next.z][next.x][next.y]=='#') {
 				if(now.z==0) next.z=1;
 				else next.z=0;

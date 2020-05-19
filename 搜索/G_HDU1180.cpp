@@ -20,35 +20,69 @@ int bfs() {
 		node now=q.top();
 		q.pop();
 		for(int i=0; i<4; i++) {
-			int nx,ny;
+			int nx,ny,step;
 			nx=now.x+dx[i];
 			ny=now.y+dy[i];
+			step=now.step+1;
 			if(nx<0 || nx>=m || ny <0 || ny>=n ||
 			map[nx][ny]=='*' || vis[nx][ny]==1)
 				continue;
+			node next;
+			next.x=nx; next.y=ny; next.step=step;
+			if(map[nx][ny]=='T') return next.step;
+			vis[nx][ny]=1;
+			q.push(next);
+			
 			if(map[nx][ny]=='|') {
 				if(now.step%2!=0) {
-					if(i==0 || i==1) continue;
+					if(i==0) {
+						step+=1;
+						ny=ny+1;
+					}
+					else if(i==1) {
+						step+=1;
+						ny=ny-1;
+					}
 					else if(i==2) {
 						nx=nx+1;
 					}
 					else {
 						nx=nx-1;
-					}					
+					}	
+								
 				}
 				else {
-					if(i==2 || i==3) continue;
-					else if(i==1) {
+					if(i==2) {
+						step+=1;
+						nx=nx+1;
+					}
+					else if(i==3) {
+						step+=1;
+						nx=nx-1;
+					}
+					else if(i==0) {
 						ny=ny+1;
 					}
 					else {
 						ny=ny-1;
 					}
 				}
+				
+				next.x=nx; next.y=ny; next.step=step;
+				if(map[nx][ny]=='T') return next.step;
+				vis[nx][ny]=1;
+				q.push(next);
 			}
 			else if(map[nx][ny]=='-') {
 				if(now.step%2!=0) {
-					if(i==2 || i==3) continue;
+					if(i==2) {
+						step+=1;
+						nx=nx+1;
+					}
+					else if(i==3) {
+						step+=1;
+						nx=nx-1;
+					}
 					else if(i==1) {
 						ny=ny+1;
 					}
@@ -57,7 +91,14 @@ int bfs() {
 					}					
 				}
 				else {
-					if(i==0 || i==1) continue;
+					if(i==0) {
+						step+=1;
+						ny=ny+1;
+					}
+					else if(i==1) {
+						step+=1;
+						ny=ny-1;
+					}
 					else if(i==2) {
 						nx=nx+1;
 					}
@@ -66,12 +107,12 @@ int bfs() {
 					}
 				}
 				
+				next.x=nx; next.y=ny; next.step=step;
+				if(map[nx][ny]=='T') return next.step;
+				vis[nx][ny]=1;
+				q.push(next);
 			}
-			node next;
-			next.x=nx; next.y=ny; next.step=now.step+1;
-			if(map[nx][ny]=='T') return next.step;
-			vis[nx][ny]=1;
-			q.push(next);
+			
 		}
 	}
 	return -1;
@@ -89,8 +130,9 @@ int main() {
 			}
 		}
 		while(!q.empty()) q.pop();
+		vis[start.x][start.y]=1;
 		q.push(start);
 		int ans=bfs();
 		cout << ans <<endl;
 	}
-} 
+}
