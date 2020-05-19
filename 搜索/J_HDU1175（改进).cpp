@@ -20,15 +20,25 @@ bool bfs() {
 	while(!q.empty()) {
 		node now=q.front();
 		q.pop();
+		if(next.cnt<=2 && now.x==final.x && now.y==final.y) 
+			return true;		
+		node next;
+		next.cnt=now.cnt+1;
+
 		for(int i=0; i<4; i++) {
-			node next;
 			next.x=now.x+dx[i];
 			next.y=now.y+dy[i];
+			while(next.x>=0 && next.x<n && next.y>=0 && next.y<m
+			&& map[next.x][next.y]==0) {
+				if(!vis[next.x][next.y]) {
+					q.push(next);
+					vis[next.x][next.y]=1;
+				}
+				next.x+=dx[i];
+				next.y+=dy[i];
+			}
 			
-			if(next.x<1 || next.x>n || next.y<1 || next.y>m ||vis[next.x][next.y]==1)
-				continue;
-			if(next.cnt<=2 && next.x==final.x && next.y==final.y) 
-				return true;
+			
 			if(map[next.x][next.y]!=0) continue;
 			vis[next.x][next.y]=1;
 			q.push(next);

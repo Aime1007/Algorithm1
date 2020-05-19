@@ -13,18 +13,57 @@ int dx[]={0,0,1,-1};
 struct node {
 	int x,y;
 	int cnt;
-
+	int last;
+	friend bool operator <(node a,node b) {
+		return a.cnt>b.cnt;
+	}
+	//last=0 上一步x方向移动 
+	//last=1 上一步y方向移动 
 }start,final;
-queue<node> q;
+priority_queue<node> q;
 bool bfs() {
 	while(!q.empty()) {
-		node now=q.front();
+		node now=q.top();
 		q.pop();
 		for(int i=0; i<4; i++) {
 			node next;
 			next.x=now.x+dx[i];
 			next.y=now.y+dy[i];
-			
+			if(now.last==0) {
+				if(now.x==next.x) {
+					if(!q.empty() && q.top().cnt==now.cnt){
+						continue;
+					}
+					next.cnt=now.cnt+1;
+					next.last=1;
+				}
+				else {
+					next.cnt=now.cnt;
+					next.last=0;
+				}
+			}
+			else if(now.last==1) {
+				if(now.y==next.y) {
+					if(!q.empty() && q.top().cnt==now.cnt){
+						continue;
+					}
+					next.cnt=now.cnt+1;
+					next.last=0;
+				}
+				else {
+					next.cnt=now.cnt;
+					next.last=1;
+				}
+			}
+			else {
+				if(now.x==next.x) {
+					next.last=1;
+				}
+				else {
+					next.last=0;
+				}
+				next.cnt=now.cnt;
+			}
 			if(next.x<1 || next.x>n || next.y<1 || next.y>m ||vis[next.x][next.y]==1)
 				continue;
 			if(next.cnt<=2 && next.x==final.x && next.y==final.y) 
