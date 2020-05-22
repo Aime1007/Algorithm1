@@ -8,117 +8,59 @@ int vis[25][25];
 struct node {
 	int x,y;
 	int step;
-	friend bool operator<(node a,node b) {
-		return a.step>b.step;
-	}
 }start;
-priority_queue<node> q;
-int dx[]={0,0,1,-1};
-int dy[]={1,-1,0,0};
+queue<node> q;
+int dx[]={0,1,0,-1};
+int dy[]={1,0,-1,0};
+bool judge(node a,int i) {
+	if((map[a.x][a.y]=='|' && i%2==1 && (a.step-1)%2==0)
+	|| (map[a.x][a.y]=='|' && i%2==0 && (a.step-1)%2==1)
+	|| (map[a.x][a.y]=='-' && i%2==0 && (a.step-1)%2==0)
+	|| (map[a.x][a.y]=='-' && i%2==1 && (a.step-1)%2==1))
+		return true;
+	return false;
+}
 int bfs() {
 	while(!q.empty()) {
-		node now=q.top();
+		node now=q.front();
 		q.pop();
 		for(int i=0; i<4; i++) {
-			int nx,ny,step;
-			nx=now.x+dx[i];
-			ny=now.y+dy[i];
-			step=now.step+1;
-			if(nx<0 || nx>=m || ny <0 || ny>=n ||
-			map[nx][ny]=='*' || vis[nx][ny]==1)
-				continue;
 			node next;
-			next.x=nx; next.y=ny; next.step=step;
-			if(map[nx][ny]=='T') return next.step;
-			vis[nx][ny]=1;
-			q.push(next);
-			
-			if(map[nx][ny]=='|') {
-				if(now.step%2!=0) {
-					if(i==0) {
-						step+=1;
-						ny=ny+1;
-					}
-					else if(i==1) {
-						step+=1;
-						ny=ny-1;
-					}
-					else if(i==2) {
-						nx=nx+1;
-					}
-					else {
-						nx=nx-1;
-					}	
-								
-				}
-				else {
-					if(i==2) {
-						step+=1;
-						nx=nx+1;
-					}
-					else if(i==3) {
-						step+=1;
-						nx=nx-1;
-					}
-					else if(i==0) {
-						ny=ny+1;
-					}
-					else {
-						ny=ny-1;
-					}
-				}
-				
-				next.x=nx; next.y=ny; next.step=step;
-				if(map[nx][ny]=='T') return next.step;
-				vis[nx][ny]=1;
+			next.x=now.x+dx[i];
+			next.y=now.y+dy[i];
+			next.step=now.step+1;
+			if(next.x<0 || next.x>=m || next.y <0 || next.y>=n ||
+			map[next.x][next.y]=='*' || vis[next.x][next.y]==1)
+				continue;
+			if(map[next.x][next.y]=='T') return next.step;
+			if(map[next.x][next.y]=='.') {
+				vis[next.x][next.y]=1;
 				q.push(next);
 			}
-			else if(map[nx][ny]=='-') {
-				if(now.step%2!=0) {
-					if(i==2) {
-						step+=1;
-						nx=nx+1;
-					}
-					else if(i==3) {
-						step+=1;
-						nx=nx-1;
-					}
-					else if(i==1) {
-						ny=ny+1;
-					}
-					else {
-						ny=ny-1;
-					}					
+			if(map[next.x][next.y]=='|' || map[next.x][next.y]=='-') {
+				if(judge(next,i)) {
+					next.x=next.x+dx[i];
+					next.y=next.y+dy[i];
+					if(next.x<0 || next.x>=m || next.y <0 || next.y>=n ||
+					map[next.x][next.y]=='*' || vis[next.x][next.y]==1)
+						continue;
+					if(map[next.x][next.y]=='T') return next.step;
+					vis[next.x][next.y]=true;
+					q.push(next);
 				}
 				else {
-					if(i==0) {
-						step+=1;
-						ny=ny+1;
-					}
-					else if(i==1) {
-						step+=1;
-						ny=ny-1;
-					}
-					else if(i==2) {
-						nx=nx+1;
-					}
-					else {
-						nx=nx-1;
-					}
+					next=now;
+					next.step++;
+					q.push(next);
 				}
-				
-				next.x=nx; next.y=ny; next.step=step;
-				if(map[nx][ny]=='T') return next.step;
-				vis[nx][ny]=1;
-				q.push(next);
 			}
 			
 		}
 	}
-	return -1;
+	return 0;
 }
 int main() {
-	while(cin>>n>>m) {
+	while(cin>>m>>n) {
 		memset(vis,0,sizeof(vis));
 		for(int i=0; i<m; i++) {
 			for(int j=0; j<n; j++) {
@@ -126,6 +68,7 @@ int main() {
 				if(map[i][j]=='S') {
 					start.x=i;
 					start.y=j;
+					start.step=0;
 				}
 			}
 		}
