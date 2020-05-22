@@ -20,16 +20,19 @@ bool bfs() {
 	while(!q.empty()) {
 		node now=q.front();
 		q.pop();
-		if(next.cnt<=2 && now.x==final.x && now.y==final.y) 
-			return true;		
+		if(now.cnt<=2 && now.x==final.x && now.y==final.y) 
+			return true;
 		node next;
 		next.cnt=now.cnt+1;
 
 		for(int i=0; i<4; i++) {
 			next.x=now.x+dx[i];
 			next.y=now.y+dy[i];
-			while(next.x>=0 && next.x<n && next.y>=0 && next.y<m
-			&& map[next.x][next.y]==0) {
+			
+			while(next.x>=1 && next.x<=n && next.y>=1 && next.y<=m) {
+				if(next.cnt<=2 && next.x==final.x && next.y==final.y) 
+					return true;
+				if(map[next.x][next.y]!=0) break;
 				if(!vis[next.x][next.y]) {
 					q.push(next);
 					vis[next.x][next.y]=1;
@@ -38,10 +41,6 @@ bool bfs() {
 				next.y+=dy[i];
 			}
 			
-			
-			if(map[next.x][next.y]!=0) continue;
-			vis[next.x][next.y]=1;
-			q.push(next);
 		}
 	}
 	return false;
@@ -59,7 +58,7 @@ int main() {
 			memset(vis,0,sizeof(vis));
 			scanf("%d%d%d%d", &start.x, &start.y, &final.x, &final.y);
 			if(map[start.x][start.y] != map[final.x][final.y] ||
-			map[start.x][start.y]==0 || map[final.x][final.y]==0) {
+			map[start.x][start.y]==0 || map[final.x][final.y]==0 || (start.x==final.x && start.y==final.y)) {
 				printf("NO\n"); continue;
 			}
 			while(!q.empty()) q.pop();
