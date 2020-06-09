@@ -92,7 +92,6 @@ int main() {
 			else printf("give me the bomb please\n");
 		}
 		
-		bfs();
 	}
 	return 0;
 }
