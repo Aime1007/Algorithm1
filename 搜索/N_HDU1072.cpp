@@ -7,7 +7,7 @@
 using namespace std;
 int n,m;
 int map[10][10];
-//int vis[10][10];
+int vis[10][10];
 struct node {
 	int x,y;
 	int step;
@@ -29,7 +29,7 @@ int bfs() {
 			step=now.step+1;
 			gg=now.gg+1;
 			if(nx<0 || nx>=n || ny<0 || ny>=m ||
-//			vis[nx][ny]==1 
+			vis[nx][ny]==1 || 
 			 map[nx][ny]==0 || gg>=6)
 				continue;
 			if(map[nx][ny]==4) {
@@ -38,7 +38,7 @@ int bfs() {
 			}
 			node next;
 			next.x=nx; next.y=ny; next.step=step; next.gg=gg;
-//			vis[nx][ny]=1;
+			vis[nx][ny]=1;
 			q.push(next);
 			fa[nx][ny]=now;
 		}
@@ -49,7 +49,7 @@ int main() {
 	int t;
 	scanf("%d", &t);
 	while(t--) {
-//		memset(vis,0,sizeof(vis));
+		memset(vis,0,sizeof(vis));
 		memset(fa,-1,sizeof(fa));
 		scanf("%d%d", &n, &m);
 		for(int i=0; i<n; i++) {
@@ -68,7 +68,7 @@ int main() {
 			}
 		}
 		while(!q.empty()) q.pop();
-//		vis[start.x][start.y]=1;
+		vis[start.x][start.y]=1;
 		q.push(start);
 		int ans=bfs();
 		printf("%d\n", ans);
